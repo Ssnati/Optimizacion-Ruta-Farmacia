@@ -1,8 +1,8 @@
 import tkinter as tk
-from functools import partial
-from tkinter import simpledialog
+from tkinter import ttk
+from PIL import Image, ImageTk  # Asegúrate de tener Pillow instalado (pip install Pillow)
 
-from util import util_window, util_images
+from util import util_images
 
 
 class Tabla(tk.Frame):
@@ -10,91 +10,56 @@ class Tabla(tk.Frame):
         super().__init__(parent)
         self.edit_logo = util_images.read_image("image/create-sharp.png", (20, 20))
         self.delete_logo = util_images.read_image("image/trash-sharp.png", (20, 20))
+
         self.columnas = columnas
         self.config(bg="white")
 
+        # Contenedor para los botones
+        self.botones_frame = tk.Frame(self, bg="white", padx=25, pady=10)
+        self.botones_frame.pack(side=tk.TOP, fill=tk.X)
+
+        # Botones de editar y eliminar
+        editar_button = tk.Button(self.botones_frame, image=self.edit_logo, command=self.editar_seleccion)
+        editar_button.pack(side=tk.RIGHT, padx=50)
+        eliminar_button = tk.Button(self.botones_frame, image=self.delete_logo, command=self.eliminar_seleccion)
+        eliminar_button.pack(side=tk.LEFT, padx=50)
+
+        # Contenedor para la tabla
+        self.tv_frame = tk.Frame(self, bg="white")
+        self.tv_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        # Tabla
+        self.tv = ttk.Treeview(self.tv_frame, columns=columnas, show="headings", height=10)
+
         for col in columnas:
-            header = tk.Button(self, text=col, padx=10, pady=5, borderwidth=1, relief="solid", anchor=tk.CENTER,
-                               command=lambda: print("Hola"))
-            header.grid(row=0, column=columnas.index(col), sticky=tk.W)
-        edit_column = tk.Label(self, text="      ", padx=10, pady=5, borderwidth=1, anchor=tk.CENTER, bg="white")
-        edit_column.grid(row=0, column=len(columnas), sticky=tk.W)
+            self.tv.column(col, minwidth=0, width=100, stretch=tk.NO)
+            self.tv.heading(col, text=col.title())
 
-        delete_column = tk.Label(self, text="        ", padx=10, pady=5, borderwidth=1, anchor=tk.CENTER, bg="white")
-        delete_column.grid(row=0, column=len(columnas) + 1, sticky=tk.W)
+        self.tv.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
-        # Lista para almacenar las filas
-        self.lista_filas = []
+        scroll = tk.Scrollbar(self.tv_frame, orient=tk.VERTICAL, command=self.tv.yview)
+        scroll.pack(side=tk.RIGHT, fill=tk.Y)
+        self.tv.configure(yscrollcommand=scroll.set)
 
-    def edit_popup(self, row):
-        # Crear un popup para editar la fila
-        popup = tk.Toplevel(self)
-        popup.title("Editar")
-        popup.geometry("300x100")
-        popup.resizable(False, False)
-        util_window.center_frame(popup, 300, 100)
+    def agregar_fila(self, fila):
+        self.tv.insert("", tk.END, values=fila)
+        self.actualizar_columnas()
 
-        # Crear un entry para ingresar el nuevo valor
+    def editar_seleccion(self):
+        seleccion = self.tv.selection()
+        if seleccion:
+            # Obtener la fila seleccionada
+            fila_seleccionada = self.tv.item(seleccion)['values']
+            print(f"Editar fila: {fila_seleccionada}")
 
-        value = simpledialog.askstring("Editar", f"Editar fila {row}", parent=self)
-        if value is not None:
-            # Actualizar la fila con el nuevo valor
-            self.lista_filas[row - 1] = value
-            # Actualizar la interfaz gráfica
-            self.actualizar_tabla()
+    def eliminar_seleccion(self):
+        seleccion = self.tv.selection()
+        if seleccion:
+            # Obtener la fila seleccionada
+            fila_seleccionada = self.tv.item(seleccion)['values']
+            print(f"Eliminar fila: {fila_seleccionada}")
 
-    def delete_row(self, row):
-        # Crear un popup de confirmación para la eliminación
-        result = tk.messagebox.askquestion("Eliminar", f"¿Está seguro de eliminar la fila {row}?", parent=self)
-        if result:
-            # Eliminar la fila de la lista
-            del self.lista_filas[row - 1]
-            # Actualizar la interfaz gráfica
-            self.actualizar_tabla()
-
-    def agregar_fila(self, valores):
-        # Agregar la fila a la lista
-        self.lista_filas.append(valores)
-
-        # Actualizar la interfaz gráfica
-        for col, valor in enumerate(valores):
-            label = tk.Label(self, text=str(valor), padx=10, pady=5)
-            label.grid(row=len(self.lista_filas), column=col, sticky=tk.W)
-
-        edit_button = tk.Button(self, image=self.edit_logo, padx=10, pady=5, borderwidth=1, relief="solid",
-                                anchor=tk.CENTER, command=partial(self.edit_popup, len(self.lista_filas)))
-        edit_button.grid(row=len(self.lista_filas), column=len(self.columnas), sticky=tk.W)
-
-        delete_button = tk.Button(self, image=self.delete_logo, padx=10, pady=5, borderwidth=1, relief="solid",
-                                  anchor=tk.CENTER, command=partial(self.delete_row, len(self.lista_filas)))
-        delete_button.grid(row=len(self.lista_filas), column=len(self.columnas) + 1, sticky=tk.W)
-
-    def actualizar_tabla(self):
-        # Eliminar todos los widgets de la tabla
-        for widget in self.winfo_children():
-            widget.destroy()
-
-        # Crear los encabezados
+    def actualizar_columnas(self):
         for col in self.columnas:
-            header = tk.Label(self, text=col, padx=10, pady=5, borderwidth=1, relief="solid", anchor=tk.CENTER)
-            header.grid(row=0, column=self.columnas.index(col), sticky=tk.W)
-
-        edit_column = tk.Label(self, text="      ", padx=10, pady=5, borderwidth=1, anchor=tk.CENTER, bg="white")
-        edit_column.grid(row=0, column=len(self.columnas), sticky=tk.W)
-
-        delete_column = tk.Label(self, text="        ", padx=10, pady=5, borderwidth=1, anchor=tk.CENTER, bg="white")
-        delete_column.grid(row=0, column=len(self.columnas) + 1, sticky=tk.W)
-
-        # Crear las filas
-        for row, fila in enumerate(self.lista_filas):
-            for col, valor in enumerate(fila):
-                label = tk.Label(self, text=str(valor), padx=10, pady=5)
-                label.grid(row=row + 1, column=col, sticky=tk.W)
-
-            edit_button = tk.Button(self, image=self.edit_logo, padx=10, pady=5, borderwidth=1, relief="solid",
-                                    anchor=tk.CENTER, command=partial(self.edit_popup, row + 1))
-            edit_button.grid(row=row + 1, column=len(self.columnas), sticky=tk.W)
-
-            delete_button = tk.Button(self, image=self.delete_logo, padx=10, pady=5, borderwidth=1, relief="solid",
-                                      anchor=tk.CENTER, command=partial(self.delete_row, row + 1))
-            delete_button.grid(row=row + 1, column=len(self.columnas) + 1, sticky=tk.W)
+            self.tv.column(col, minwidth=10, width=100, stretch=tk.NO)
+            self.tv.heading(col, text=col.title())

@@ -98,14 +98,40 @@ class MainWindow(tk.Tk):
         self.main_logo.pack(side=tk.TOP, pady=50, padx=55)
 
     def pharmacies_panel_control(self):
-        self.pharmacies_main = tk.Label(self.pharmacies_panel, text="Farmacias", font=("Arial", 30), bg=self.pharmacies_panel.cget("bg"))
+        self.pharmacies_main = tk.Label(self.pharmacies_panel, bg=self.pharmacies_panel.cget("bg"))
         self.pharmacies_main.config()
-        self.pharmacies_main.pack(fill=tk.X)
+        self.pharmacies_main.pack(side=tk.TOP, pady=50, padx=55, fill=tk.X, expand=True)
 
-        self.pharmacies_table = Tabla(self.pharmacies_main, ("Nombre", "Dirección", "Teléfono", "Horario"))
+        self.pharmacies_search = tk.Entry(self.pharmacies_main, bg="white", fg="black", font=("Arial", 12))
+        self.pharmacies_search.pack(side=tk.LEFT, pady=10, padx=55, fill=tk.X, expand=True)
+
+        self.pharmacies_add_button = tk.Button(self.pharmacies_main, text="Agregar Farmacia", bg=config.COLOR_BOTONES)
+        self.pharmacies_add_button.config(anchor=tk.W)
+        self.pharmacies_add_button.pack(side=tk.RIGHT, padx=25, fill=tk.X, expand=True)
+
+
+        self.pharmacies_table = Tabla(self.pharmacies_panel, ("Nombre", "Dirección", "Teléfono", "Horario"))
         self.pharmacies_table.pack(side=tk.BOTTOM, pady=50)
 
         filas = [["FarmaciaFarmacia 1", "DirecciónDirección 1", "Teléfono 1", "Horario 1"],
+                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
+                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
+                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
+                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
+                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
+                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
+                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
+                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
+                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
+                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
+                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
+                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
+                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
+                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
+                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
+                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
+                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
+                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
                  ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
                  ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
                  ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],

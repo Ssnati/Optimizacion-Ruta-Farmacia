@@ -4,6 +4,7 @@ import config
 import util.util_images as utils_images
 import util.util_window as utils_window
 from windows.window_pharmacies import Tabla
+from windows import window_list_orders as w_list_orders
 
 
 class MainWindow(tk.Tk):
@@ -17,6 +18,7 @@ class MainWindow(tk.Tk):
         self.paneles()
         self.lateral_panel_control()
         self.main_panel_control()
+        self.list_panel_control()
 
     def config_window(self):
         self.title("Farmasec")
@@ -142,7 +144,12 @@ class MainWindow(tk.Tk):
         for fila in filas:
             self.pharmacies_table.agregar_fila(fila)
 
-        #create a vertical scrollbar to the right of the table in the main panel
-        # self.pharmacies_vsb = tk.Scrollbar(self.pharmacies_main, orient="vertical", command=self.pharmacies_table.yview)
-        # self.pharmacies_table.configure(yscrollcommand=self.pharmacies_vsb.set)
-        # self.pharmacies_vsb.pack(side="right", fill="y")
+    def list_panel_control(self):
+        self.list_orders = w_list_orders.ListaPedidosFrame(self.list_panel)
+        self.list_orders.pack(side=tk.TOP, pady=50, padx=55, fill=tk.BOTH, expand=True)
+
+        self.order_information = tk.Frame(self.list_panel, bg=self.list_panel.cget("bg"))
+        self.order_information.pack(side=tk.BOTTOM, pady=50, padx=55, fill=tk.X, expand=True)
+
+
+

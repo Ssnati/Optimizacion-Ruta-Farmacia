@@ -5,9 +5,11 @@ from windows.edit_order_popup import EditPopup
 
 
 class ListaPedidosFrame(tk.Frame):
-    def __init__(self, parent):
+    def __init__(self, parent, window_main):
         super().__init__(parent)
         self.config(bg="white")
+        self.parent = parent
+        self.window_main = window_main
         self.crear_interfaz()
 
     def crear_interfaz(self):
@@ -72,6 +74,7 @@ class ListaPedidosFrame(tk.Frame):
         print("Agregar Pedido")
 
     def hacer_ruta(self):
+        self.window_main.go_to_route()
         print("Hacer Ruta")
 
     def editar_pedido(self, event=None):

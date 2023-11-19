@@ -5,6 +5,7 @@ import util.util_images as utils_images
 import util.util_window as utils_window
 from windows.window_pharmacies import Tabla
 from windows import window_list_orders as w_list_orders
+from windows import window_route as w_route
 
 
 class MainWindow(tk.Tk):
@@ -19,6 +20,7 @@ class MainWindow(tk.Tk):
         self.lateral_panel_control()
         self.main_panel_control()
         self.list_panel_control()
+        self.route_panel_control()
 
     def config_window(self):
         self.title("Farmasec")
@@ -32,6 +34,7 @@ class MainWindow(tk.Tk):
         self.main_panel.pack_forget()  # Oculta el panel actual
         self.pharmacies_panel.pack_forget()  # Oculta el panel actual
         self.list_panel.pack_forget()  # Oculta el panel actual
+        self.route_panel.pack_forget()  # Oculta el panel actual
         panel.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)  # Muestra el nuevo panel
 
     def paneles(self):
@@ -49,6 +52,10 @@ class MainWindow(tk.Tk):
         self.list_panel = tk.Frame(self, bg=config.COLOR_TERCERO, width=800)
         self.list_panel.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
         self.list_panel.pack_forget()
+
+        self.route_panel = tk.Frame(self, bg=config.COLOR_TERCERO, width=800)
+        self.route_panel.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+        self.route_panel.pack_forget()
 
     def go_to_pharmacies(self):
         self.main_panel.pack_forget()  # Oculta el panel actual
@@ -111,7 +118,6 @@ class MainWindow(tk.Tk):
         self.pharmacies_add_button.config(anchor=tk.W)
         self.pharmacies_add_button.pack(side=tk.RIGHT, padx=25, fill=tk.X, expand=True)
 
-
         self.pharmacies_table = Tabla(self.pharmacies_panel, ("Nombre", "Dirección", "Teléfono", "Horario"))
         self.pharmacies_table.pack(side=tk.BOTTOM, pady=50)
 
@@ -145,5 +151,14 @@ class MainWindow(tk.Tk):
             self.pharmacies_table.agregar_fila(fila)
 
     def list_panel_control(self):
-        self.list_orders = w_list_orders.ListaPedidosFrame(self.list_panel)
+        self.list_orders = w_list_orders.ListaPedidosFrame(self.list_panel, self)
         self.list_orders.pack(side=tk.TOP, pady=40, padx=55, fill=tk.BOTH, expand=True)
+
+    def route_panel_control(self):
+        self.route_main = w_route.RouteFrame(self.route_panel)
+        self.route_main.pack(side=tk.TOP, pady=40, padx=55, fill=tk.BOTH, expand=True)
+
+    def go_to_route(self):
+        self.show_panel(self.route_panel)
+        print("Ruta")
+        pass

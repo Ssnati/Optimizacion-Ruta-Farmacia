@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-import config
-from util import util_images
+from windows.add_order_popup import Popup
 
 
 class ListaPedidosFrame(tk.Frame):
@@ -11,83 +10,79 @@ class ListaPedidosFrame(tk.Frame):
         self.crear_interfaz()
 
     def crear_interfaz(self):
-        # Titulo
-        titulo_label = tk.Label(self, text="Lista de Pedidos", font=("Arial", 16), bg="white", fg="black",
-                                anchor=tk.CENTER)
-        titulo_label.grid(row=0, column=0, columnspan=4, pady=(10, 0), sticky="n")
+        # Panel superior con tabla de pedidos y botones
+        panel_superior = tk.Frame(self, bg="white")
+        panel_superior.grid(row=0, column=0, sticky="nsew", pady=(10, 0), padx=5)
 
-        # Lista desplegable para elegir una farmacia
-        farmacia_label = tk.Label(self, text="Elegir Farmacia:", bg="white")
-        farmacia_label.grid(row=1, column=1, sticky="e", pady=(10, 5))
-        farmacia_dropdown = ttk.Combobox(self, values=["Farmacia 1", "Farmacia 2", "Farmacia 3"])
-        farmacia_dropdown.grid(row=1, column=2, pady=(10, 5), sticky="w")
+        # - Tabla de pedidos
+        self.tabla_pedidos = ttk.Treeview(panel_superior, columns=("Farmacia", "Producto"), show="headings", height=10)
+        self.tabla_pedidos.heading("Farmacia", text="Farmacia")
+        self.tabla_pedidos.heading("Producto", text="Producto")
+        self.tabla_pedidos.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
-        # Lista desplegable para elegir un producto
-        producto_label = tk.Label(self, text="Elegir Producto:", bg="white")
-        producto_label.grid(row=2, column=1, sticky="e", pady=5)
-        producto_dropdown = ttk.Combobox(self, values=["Producto 1", "Producto 2", "Producto 3"])
-        producto_dropdown.grid(row=2, column=2, pady=5, sticky="w")
+        for i in range(20):
+            self.tabla_pedidos.insert("", tk.END, values=[f"Farmacia {i}", f"Pedido {i}"])
+        self.tabla_pedidos.bind("<Double-1>", self.editar_pedido)
 
-        # Boton para agregar el pedido
-        agregar_button = tk.Button(self, text="Agregar Pedido", command=self.agregar_pedido, bg=config.COLOR_SECUNDARIO)
-        agregar_button.grid(row=3, column=1, columnspan=2, pady=(5, 10))
+        # - Panel para botones
+        panel_botones_superior = tk.Frame(panel_superior, bg="white")
+        panel_botones_superior.pack(side=tk.LEFT, padx=10)
 
-        # Panel con la lista de entregas
-        self.tv_frame = tk.Frame(self, bg="red")
-        self.tv_frame.grid(row=1, column=3, rowspan=3, pady=(10, 0), sticky="w")
+        #   - Boton para agregar pedido
+        boton_agregar_pedido = tk.Button(panel_botones_superior, text="Agregar Pedido", command=self.agregar_pedido)
+        boton_agregar_pedido.pack(side=tk.TOP, pady=5)
 
-        self.create_order_panel()
+        #   - Boton para hacer ruta
+        boton_hacer_ruta = tk.Button(panel_botones_superior, text="Hacer Ruta", command=self.hacer_ruta)
+        boton_hacer_ruta.pack(side=tk.TOP, pady=5)
+
+        # Panel inferior con botones para editar y eliminar pedidos y tabla de productos de pedidos
+        panel_inferior = tk.Frame(self, bg="white")
+        panel_inferior.grid(row=1, column=0, sticky="nsew", pady=(10, 0), padx=5)
+
+        # - Panel para botones
+        panel_botones_inferior = tk.Frame(panel_inferior, bg="white")
+        panel_botones_inferior.pack(side=tk.TOP, padx=10)
+
+        #   - Boton para editar pedido
+        boton_editar_pedido = tk.Button(panel_botones_inferior, text="Editar Pedido", command=self.editar_pedido)
+        boton_editar_pedido.pack(side=tk.LEFT, pady=5, padx=5)
+
+        #   - Boton para eliminar pedido
+        boton_eliminar_pedido = tk.Button(panel_botones_inferior, text="Eliminar Pedido", command=self.eliminar_pedido)
+        boton_eliminar_pedido.pack(side=tk.RIGHT, pady=5, padx=5)
+
+        # - Tabla de productos de pedidos
+        self.tabla_productos_pedidos = ttk.Treeview(panel_inferior, columns=("Producto", "Cantidad"), show="headings",
+                                                    height=10)
+        self.tabla_productos_pedidos.heading("Producto", text="Producto")
+        self.tabla_productos_pedidos.heading("Cantidad", text="Cantidad")
+        for i in range(20):
+            self.tabla_productos_pedidos.insert("", tk.END, values=[f"Producto {i}", i])
+
+        self.tabla_productos_pedidos.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
 
     def agregar_pedido(self):
-        # Lógica para agregar el pedido
-        print("Pedido agregado")
+        pedido_popup = Popup(self, "Agregar Pedido", 400, 400)
+        pedido_popup.title("Agregar Pedido")
+        pedido_popup.grab_set()
+        pedido_popup.focus_set()
+        pedido_popup.wait_window()
+        print("Agregar Pedido")
 
-    def create_order_panel(self):
-        # Crear una lista de pedidos
-        pedidos = [
-            {"farmacia": "Farmacia 1", "producto": "Producto A"},
-            {"farmacia": "Farmacia 2", "producto": "Producto B"},
-            {"farmacia": "Farmacia 2", "producto": "Producto B"},
-            {"farmacia": "Farmacia 2", "producto": "Producto B"},
-            {"farmacia": "Farmacia 2", "producto": "Producto B"},
-            {"farmacia": "Farmacia 2", "producto": "Producto B"},
-            {"farmacia": "Farmacia 2", "producto": "Producto B"},
-            {"farmacia": "Farmacia 2", "producto": "Producto B"},
-            {"farmacia": "Farmacia 2", "producto": "Producto B"},
-            {"farmacia": "Farmacia 2", "producto": "Producto B"},
-            {"farmacia": "Farmacia 2", "producto": "Producto B"},
-            {"farmacia": "Farmacia 2", "producto": "Producto B"},
-            {"farmacia": "Farmacia 2", "producto": "Producto B"},
-            {"farmacia": "Farmacia 2", "producto": "Producto B"},
-            {"farmacia": "Farmacia 2", "producto": "Producto B"},
-            {"farmacia": "Farmacia 2", "producto": "Producto B"},
-            {"farmacia": "Farmacia 2", "producto": "Producto B"},
-            {"farmacia": "Farmacia 2", "producto": "Producto B"},
-            {"farmacia": "Farmacia 2", "producto": "Producto B"},
-            {"farmacia": "Farmacia 3", "producto": "Producto C"},
-        ]
+    def hacer_ruta(self):
+        print("Hacer Ruta")
 
-        self.tv = ttk.Treeview(self.tv_frame, columns=("Farmacia"), show="headings", height=10)
-        self.tv.column("Farmacia", minwidth=0, width=100, stretch=tk.NO)
-        self.tv.heading("Farmacia", text="Farmacia")
-        self.tv.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-
-        # Agregar un evento al hacer clic en una fila
-        for pedido in pedidos:
-            self.tv.insert("", tk.END, values=[pedido["farmacia"]])
-        self.tv.bind("<ButtonRelease-1>", self.on_tree_click)
-
-        scroll = tk.Scrollbar(self.tv_frame, orient=tk.VERTICAL, command=self.tv.yview)
-        scroll.pack(side=tk.RIGHT, fill=tk.Y)
-        self.tv.configure(yscrollcommand=scroll.set)
-
-    def on_tree_click(self):
-        # Obtener la fila seleccionada
-        selected_item = self.tv.selection()
+    def editar_pedido(self, event=None):
+        selected_item = self.tabla_pedidos.selection()
         if selected_item:
             # Obtener los valores de la fila seleccionada
-            values = self.tv.item(selected_item)['values']
+            values = self.tabla_pedidos.item(selected_item)['values']
             if values:
-                print("Farmacia seleccionada:", values[0], "Indice:", selected_item)
+                print("Farmacia seleccionada:", values, "Indice:", selected_item)
             else:
                 print("No hay valores seleccionados en la fila.")
+        print("Editar Pedido")
+
+    def eliminar_pedido(self):
+        print("Eliminar Pedido")

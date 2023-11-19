@@ -146,10 +146,4 @@ class MainWindow(tk.Tk):
 
     def list_panel_control(self):
         self.list_orders = w_list_orders.ListaPedidosFrame(self.list_panel)
-        self.list_orders.pack(side=tk.TOP, pady=50, padx=55, fill=tk.BOTH, expand=True)
-
-        self.order_information = tk.Frame(self.list_panel, bg=self.list_panel.cget("bg"))
-        self.order_information.pack(side=tk.BOTTOM, pady=50, padx=55, fill=tk.X, expand=True)
-
-
-
+        self.list_orders.pack(side=tk.TOP, pady=40, padx=55, fill=tk.BOTH, expand=True)

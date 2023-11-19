@@ -2,7 +2,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 
 
-class Popup(tk.Toplevel):
+class AddPopup(tk.Toplevel):
     def __init__(self, parent, title, width, height):
         super().__init__(parent)
         self.title(title)

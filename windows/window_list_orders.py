@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
-from windows.add_order_popup import Popup
+from windows.add_order_popup import AddPopup
+from windows.edit_order_popup import EditPopup
 
 
 class ListaPedidosFrame(tk.Frame):
@@ -63,7 +64,7 @@ class ListaPedidosFrame(tk.Frame):
         self.tabla_productos_pedidos.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
 
     def agregar_pedido(self):
-        pedido_popup = Popup(self, "Agregar Pedido", 400, 400)
+        pedido_popup = AddPopup(self, "Agregar Pedido", 400, 400)
         pedido_popup.title("Agregar Pedido")
         pedido_popup.grab_set()
         pedido_popup.focus_set()
@@ -80,9 +81,16 @@ class ListaPedidosFrame(tk.Frame):
             values = self.tabla_pedidos.item(selected_item)['values']
             if values:
                 print("Farmacia seleccionada:", values, "Indice:", selected_item)
+                pedido_popup = EditPopup(self, "Editar Pedido", 400, 400)
+                pedido_popup.title("Editar Pedido")
+                pedido_popup.grab_set()
+                pedido_popup.focus_set()
+                pedido_popup.wait_window()
             else:
                 print("No hay valores seleccionados en la fila.")
         print("Editar Pedido")
 
     def eliminar_pedido(self):
+        # Pedir confirmacion para eliminar el pedido
+
         print("Eliminar Pedido")

@@ -12,6 +12,8 @@ class RouteFrame(tk.Frame):
         self.config(bg="white")
         self.graph = nx.Graph()  # Grafo
         self.rutas_list = []  # Lista de rutas
+        for i in range(5):
+            self.rutas_list.append(f"Ruta {i}")
 
         self.crear_interfaz()
 

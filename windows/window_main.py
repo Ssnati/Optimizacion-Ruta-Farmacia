@@ -13,7 +13,7 @@ class MainWindow(tk.Tk):
 
     def __init__(self):
         super().__init__()
-        self.logo = utils_images.read_image("image/logo.png", (100, 100))
+        self.logo = utils_images.read_image("image/logo.png", (400,400))
         self.home = utils_images.read_image("image/home.png", (50, 50))
         self.config_window()
         self.paneles()
@@ -44,7 +44,7 @@ class MainWindow(tk.Tk):
         self.main_panel = tk.Frame(self, bg=config.COLOR_SECUNDARIO, width=800)
         self.main_panel.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
-        self.pharmacies_panel = tk.Frame(self, bg=config.COLOR_TERCERO, width=800)
+        self.pharmacies_panel = tk.Frame(self, bg="white", width=800)
         self.pharmacies_panel.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
         self.pharmacies_panel_control()
         self.pharmacies_panel.pack_forget()
@@ -100,14 +100,14 @@ class MainWindow(tk.Tk):
         self.fill_button2.pack(side=tk.TOP, pady=80, expand=False)
 
     def main_panel_control(self):
-        self.main_title = tk.Label(self.main_panel, text="Farmasec", font=("Arial", 30), bg=self.main_panel.cget("bg"))
+        self.main_title = tk.Label(self.main_panel, text="Farmasec", font=("Arial", 30), bg="white")
         self.main_title.pack(side=tk.TOP, pady=50, padx=55)
 
         self.main_logo = tk.Label(self.main_panel, image=self.logo, bg=self.main_panel.cget("bg"))
         self.main_logo.pack(side=tk.TOP, pady=50, padx=55)
 
     def pharmacies_panel_control(self):
-        self.pharmacies_main = tk.Label(self.pharmacies_panel, bg=self.pharmacies_panel.cget("bg"))
+        self.pharmacies_main = tk.Label(self.pharmacies_panel, bg="white")
         self.pharmacies_main.config()
         self.pharmacies_main.pack(side=tk.TOP, pady=50, padx=55, fill=tk.X, expand=True)
 

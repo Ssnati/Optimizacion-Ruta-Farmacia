@@ -21,7 +21,9 @@ class conection:
         self.consult_pharmacies()
         self.consult_archs()
         self.add_nodes_graph()
-    
+
+    def getMatrixPharmacy(self):     
+        matriz = [[ph.get_id_pharmacy(), ph.get_pharmacy_name(), ph.get_pharmacy_NIT(), ph.get_latitud(), ph.get_longitud()] for ph in pharmacy]
     # Ya
     def add_nodes_graph(self):
         # positions = dict()

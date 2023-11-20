@@ -1,0 +1,27 @@
+CREATE TABLE PRODUCT_TYPES(
+	id_product_type INTEGER PRIMARY KEY AUTOINCREMENT,
+	type TEXT NOT NULL
+);
+
+CREATE TABLE PRODUCTS(
+	id_product INTEGER PRIMARY KEY AUTOINCREMENT,
+	product_name TEXT NOT NULL,
+	product_description TEXT NOT NULL,
+	id_product_type INTEGER NOT NULL,
+	FOREIGN KEY(id_product_type) REFERENCES PRODUCT_TYPES(id_product_type)
+);
+
+CREATE TABLE PHARMACIES(
+	id_pharmacy INTEGER PRIMARY KEY AUTOINCREMENT,
+	pharmacy_name TEXT NOT NULL,
+	pharmacy_NIT TEXT NOT NULL,
+	latitude REAL NOT NULL,
+	longitude REAL NOT NULL
+);
+
+CREATE TABLE PHARMACY_CONECTIONS(
+	id_first_pharmacy INTEGER NOT NULL,
+	id_second_pharmacy INTEGER NOT NULL,
+	FOREIGN KEY(id_first_pharmacy) REFERENCES PHARMACIES(id_pharmacy),
+	FOREIGN KEY(id_second_pharmacy) REFERENCES PHARMACIES(id_pharmacy)
+);

@@ -56,13 +56,10 @@ class ListaPedidosFrame(tk.Frame):
         boton_eliminar_pedido.pack(side=tk.RIGHT, pady=5, padx=5)
 
         # - Tabla de productos de pedidos
-        self.tabla_productos_pedidos = ttk.Treeview(panel_inferior, columns=("Producto", "Cantidad"), show="headings",
+        self.tabla_productos_pedidos = ttk.Treeview(panel_inferior, columns=("Producto", "Tipo"), show="headings",
                                                     height=10)
         self.tabla_productos_pedidos.heading("Producto", text="Producto")
-        self.tabla_productos_pedidos.heading("Cantidad", text="Cantidad")
-        for i in range(20):
-            self.tabla_productos_pedidos.insert("", tk.END, values=[f"Producto {i}", i])
-
+        self.tabla_productos_pedidos.heading("Tipo", text="Tipo")
         self.tabla_productos_pedidos.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
 
     def agregar_pedido(self):
@@ -76,6 +73,15 @@ class ListaPedidosFrame(tk.Frame):
     def hacer_ruta(self):
         self.window_main.go_to_route()
         print("Hacer Ruta")
+
+    def agregar_fila(self, fila):
+        self.tabla_productos_pedidos.insert("", tk.END, values=fila)
+        self.actualizar_columnas_tabla_productos()
+
+    def actualizar_columnas_tabla_productos(self):
+        for col in self.columnas:
+            self.tabla_productos_pedidos.column(col, minwidth=10, width=100, stretch=tk.NO)
+            self.tabla_productos_pedidos.heading(col, text=col.title())
 
     def editar_pedido(self, event=None):
         selected_item = self.tabla_pedidos.selection()

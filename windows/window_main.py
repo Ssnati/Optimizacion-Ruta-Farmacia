@@ -121,41 +121,12 @@ class MainWindow(tk.Tk):
         self.pharmacies_table = Tabla(self.pharmacies_panel, ("Codigo", "Nombre", "NIT", "Latitud", "Longitud"))
         self.pharmacies_table.pack(side=tk.BOTTOM, pady=50)
 
-        filas = [["FarmaciaFarmacia 1", "DirecciónDirección 1", "Teléfono 1", "Horario 1"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"],
-                 ["Farmacia 2", "Dirección 2", "Teléfono 2", "Horario 2"]]
-        for fila in filas:
-            self.pharmacies_table.agregar_fila(fila)
-
     def list_panel_control(self):
         self.list_orders = w_list_orders.ListaPedidosFrame(self.list_panel, self)
         self.list_orders.pack(side=tk.TOP, pady=40, padx=55, fill=tk.BOTH, expand=True)
 
     def route_panel_control(self):
-        self.route_main = w_route.RouteFrame(self.route_panel)
+        self.route_main = w_route.RouteFrame(self.route_panel,[],[],[])
         self.route_main.pack(side=tk.TOP, pady=40, padx=55, fill=tk.BOTH, expand=True)
 
     def go_to_route(self):
@@ -167,4 +138,9 @@ class MainWindow(tk.Tk):
         self.pharmacies_table.clear_table()
         for ph in pharmacies:
             self.pharmacies_table.agregar_fila(ph)
+    
+    def load_products(self, products):
+        self.pharmacies_table.clear_table() # Cambiar po tabla productos
+        for p in products:
+            self.pharmacies_table.agregar_fila(p) # Cambiar po tabla productos
 

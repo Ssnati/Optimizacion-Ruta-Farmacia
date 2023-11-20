@@ -26,10 +26,10 @@ class RouteFrame(tk.Frame):
         self.panel_derecho.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
         # Crear grafo visual
-        self.crear_grafo_visual()
+        #self.crear_grafo_visual()
 
         # Crear lista de rutas
-        self.ver_rutas()
+        #self.ver_rutas()
 
     def crear_grafo_visual(self,pharmacies,archs,shortest_path):
         positions = dict()

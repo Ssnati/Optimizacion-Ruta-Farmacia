@@ -50,7 +50,6 @@ class Tabla(tk.Frame):
         if seleccion:
             # Obtener la fila seleccionada
             fila_seleccionada = self.tv.item(seleccion)['values']
-            print(f"Editar fila: {fila_seleccionada}")
 
     def eliminar_seleccion(self):
         seleccion = self.tv.selection()

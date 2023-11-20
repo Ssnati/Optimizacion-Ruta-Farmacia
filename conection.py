@@ -20,10 +20,14 @@ class conection:
         self.consult_products()
         self.consult_pharmacies()
         self.consult_archs()
-        self.add_nodes_graph()
+        # self.add_nodes_graph()
 
-    def getMatrixPharmacy(self):     
-        matriz = [[ph.get_id_pharmacy(), ph.get_pharmacy_name(), ph.get_pharmacy_NIT(), ph.get_latitud(), ph.get_longitud()] for ph in pharmacy]
+    def get_matrix_pharmacy(self):
+        return [[ph.get_id_pharmacy(), ph.get_pharmacy_name(), ph.get_pharmacy_NIT(), ph.get_latitud(), ph.get_longitud()] for ph in self.pharmacies]
+    
+    def get_matrix_products(self):
+        return [[p.get_product_name(), p.get_product_type().get_type()] for p in self.products]
+
     # Ya
     def add_nodes_graph(self):
         # positions = dict()

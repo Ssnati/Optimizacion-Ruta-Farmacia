@@ -1,5 +1,5 @@
-from src.model import *
-from connection.conection import *
+from model import *
+from conection import *
 from windows.window_main import *
 
 app = MainWindow()

@@ -105,7 +105,7 @@ class arch:
         self.calculate_distance()
 
     def calculate_distance(self):
-        self.distance = math.sqrt((self.pharmacy_2.get_latitud() - self.pharmacy_1.get_latitud())**2 + (self.pharmacy_2.get_longitud() - self.pharmacy_1.get_longitud())**2)
+        self.distance = round(math.sqrt((self.pharmacy_2.get_latitud() - self.pharmacy_1.get_latitud())**2 + (self.pharmacy_2.get_longitud() - self.pharmacy_1.get_longitud())**2))
 
     def get_pharmacy_1(self):
         return self.pharmacy_1

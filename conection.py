@@ -20,41 +20,41 @@ class conection:
         self.consult_products()
         self.consult_pharmacies()
         self.consult_archs()
-        # self.add_nodes_graph()
+        self.add_nodes_graph()
     
-    # # Ya
-    # def add_nodes_graph(self):
-    #     # positions = dict()
-    #     # for ph in self.pharmacies:
-    #     #     positions[ph.get_pharmacy_name()] = (ph.get_latitud(), ph.get_longitud())
-    #     #     self.graph.add_node(ph.get_pharmacy_name())
+    # Ya
+    def add_nodes_graph(self):
+        # positions = dict()
+        # for ph in self.pharmacies:
+        #     positions[ph.get_pharmacy_name()] = (ph.get_latitud(), ph.get_longitud())
+        #     self.graph.add_node(ph.get_pharmacy_name())
         
-    #     positions = dict()
-    #     # Crear un grafo simple para el ejemplo
-    #     for ph in self.pharmacies:
-    #         positions[ph.get_pharmacy_name()] = (ph.get_latitud(), ph.get_longitud())
-    #         self.graph.add_node(ph.get_pharmacy_name())
+        positions = dict()
+        # Crear un grafo simple para el ejemplo
+        for ph in self.pharmacies:
+            positions[ph.get_pharmacy_name()] = (ph.get_latitud(), ph.get_longitud())
+            self.graph.add_node(ph.get_pharmacy_name())
         
-    #     for a in self.archs:
-    #         self.graph.add_edge(a.get_pharmacy_1().get_pharmacy_name(), a.get_pharmacy_2().get_pharmacy_name(), weight=a.get_distance())
+        for a in self.archs:
+            self.graph.add_edge(a.get_pharmacy_1().get_pharmacy_name(), a.get_pharmacy_2().get_pharmacy_name(), weight=a.get_distance())
         
-    #     # nx.draw(self.graph, pos=positions, node_color='blue',edge_color='red',with_labels=True)
-    #     # labels = nx.get_edge_attributes(self.graph, 'weight')
-    #     # nx.draw_networkx_edge_labels(self.graph, positions, edge_labels=labels)
-    #     # plt.title("Grafo Ponderado Dirigido")
+        # nx.draw(self.graph, pos=positions, node_color='blue',edge_color='red',with_labels=True)
+        # labels = nx.get_edge_attributes(self.graph, 'weight')
+        # nx.draw_networkx_edge_labels(self.graph, positions, edge_labels=labels)
+        # plt.title("Grafo Ponderado Dirigido")
         
-    #     # Calcular el camino más corto desde 'A' a 'E'
-    #     shortest_path = nx.shortest_path(self.graph, source='SALUDEXPRESS', target='ECOFARMA')
+        # Calcular el camino más corto desde 'A' a 'E'
+        shortest_path = nx.shortest_path(self.graph, source='SALUDEXPRESS', target='ECOFARMA')
 
-    #     # Asignar colores a los nodos y bordes del camino
-    #     node_colors = ['red' if node in shortest_path else 'blue' for node in self.graph.nodes()]
-    #     edge_colors = ['red' if (u, v) in zip(shortest_path, shortest_path[1:]) else 'blue' for u, v in self.graph.edges()]
+        # Asignar colores a los nodos y bordes del camino
+        node_colors = ['red' if node in shortest_path else 'blue' for node in self.graph.nodes()]
+        edge_colors = ['red' if (u, v) in zip(shortest_path, shortest_path[1:]) else 'blue' for u, v in self.graph.edges()]
 
-    #     # Dibujar el grafo con colores asignados
-    #     nx.draw(self.graph, positions, with_labels=True, node_color=node_colors, edge_color=edge_colors, font_weight='bold')
-    #     labels = nx.get_edge_attributes(self.graph, 'weight')
-    #     nx.draw_networkx_edge_labels(self.graph, positions, edge_labels=labels)
-    #     plt.show()
+        # Dibujar el grafo con colores asignados
+        nx.draw(self.graph, positions, with_labels=True, node_color=node_colors, edge_color=edge_colors, font_weight='bold')
+        labels = nx.get_edge_attributes(self.graph, 'weight')
+        nx.draw_networkx_edge_labels(self.graph, positions, edge_labels=labels)
+        plt.show()
 
 
     def delete_nodes_graph(self, pharmacy_name):

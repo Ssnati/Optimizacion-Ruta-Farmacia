@@ -63,3 +63,7 @@ class Tabla(tk.Frame):
         for col in self.columnas:
             self.tv.column(col, minwidth=10, width=100, stretch=tk.NO)
             self.tv.heading(col, text=col.title())
+
+    def clear_table(self):
+        for i in self.tv.get_children():
+            self.tv.delete(i)

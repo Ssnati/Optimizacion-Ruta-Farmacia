@@ -118,7 +118,7 @@ class MainWindow(tk.Tk):
         self.pharmacies_add_button.config(anchor=tk.W)
         self.pharmacies_add_button.pack(side=tk.RIGHT, padx=25, fill=tk.X, expand=True)
 
-        self.pharmacies_table = Tabla(self.pharmacies_panel, ("Nombre", "Dirección", "Teléfono", "Horario"))
+        self.pharmacies_table = Tabla(self.pharmacies_panel, ("Codigo", "Nombre", "NIT", "Latitud", "Longitud"))
         self.pharmacies_table.pack(side=tk.BOTTOM, pady=50)
 
         filas = [["FarmaciaFarmacia 1", "DirecciónDirección 1", "Teléfono 1", "Horario 1"],
@@ -162,3 +162,9 @@ class MainWindow(tk.Tk):
         self.show_panel(self.route_panel)
         print("Ruta")
         pass
+
+    def load_pharmacies(self, pharmacies):
+        self.pharmacies_table.clear_table()
+        for ph in pharmacies:
+            self.pharmacies_table.agregar_fila(ph)
+

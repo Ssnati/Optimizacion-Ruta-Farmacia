@@ -1,4 +1,4 @@
-from model import *
+from src.model import *
 import sqlite3 as sq
 import networkx as nx
 import matplotlib.pyplot as plt
